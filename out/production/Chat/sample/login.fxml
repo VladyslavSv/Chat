@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="136.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login">
+   <children>
+       <Label layoutX="35.0" layoutY="42.0" text="Name :">
+           <font>
+               <Font name="Monospaced Regular" size="16.0" />
+           </font>
+       </Label>
+       <Button fx:id="bConnect" layoutX="131.0" layoutY="85.0" mnemonicParsing="false" onAction="#onButtonConnect" text="Connect">
+           <font>
+               <Font name="Monospaced Regular" size="16.0" />
+           </font>
+       </Button>
+       <TextField fx:id="tfName" layoutX="129.0" layoutY="40.0" onKeyPressed="#onKeyPressed" prefHeight="25.0" prefWidth="206.0" />
+   </children>
+</AnchorPane>

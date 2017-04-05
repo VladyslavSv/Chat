@@ -20,7 +20,8 @@ public class Client implements Initializable{
         try {
             Socket socket = new Socket("127.0.0.1", 6789);
             output = new ObjectOutputStream(socket.getOutputStream());
-            output.writeObject("User");
+            System.out.println(Login.userName);
+            output.writeObject(Login.userName);
             output.flush();
             input = new ObjectInputStream(socket.getInputStream());
             chat();
