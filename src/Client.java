@@ -42,7 +42,7 @@ public class Client {
 
         }
     }
-
+    //
     public void startRunning(){
         try {
             connect();
