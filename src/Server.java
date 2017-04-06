@@ -19,11 +19,11 @@ public class Server {
         ServerSocket serverSocket = null;
         Socket socket;
         try {
-            serverSocket = new ServerSocket(6789);
+            serverSocket = new ServerSocket(6969);
             System.out.println("Server Started");
             while(true) {
                 socket = serverSocket.accept();
-                //System.out.println("Yes! " + socket.getPort());
+                System.out.println("Yes! " + socket.getPort());
                 ServerReceiver thread = new ServerReceiver(socket);
                 thread.start();
             }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
@@ -18,27 +19,19 @@
    <children>
        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-padding: 4;" GridPane.rowIndex="1">
           <children>
-              <TextField fx:id="tField" onKeyPressed="#onKeyPressed" prefHeight="72.0" prefWidth="535.0" />
-              <GridPane prefHeight="73.0" prefWidth="118.0">
-                  <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.0" minWidth="10.0" prefWidth="38.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="88.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="41.0" />
-                  </columnConstraints>
-                  <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  </rowConstraints>
-                 <children>
-                     <Button mnemonicParsing="false" onAction="#onButtonClick" prefHeight="50.0" prefWidth="67.0" text="Send" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                 </children>
-              </GridPane>
+              <TextField fx:id="tField" onKeyPressed="#onKeyPressed" prefHeight="71.0" prefWidth="506.0" />
+            <AnchorPane prefHeight="71.0" prefWidth="124.0">
+               <children>
+                  <Button layoutX="7.0" layoutY="2.0" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="17.0" prefWidth="55.0" text="Send" />
+                  <ImageView fx:id="imageView" onMousePressed="#onPicturePressed" fitHeight="22.0" fitWidth="25.0" layoutX="76.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
+
+               </children>
+            </AnchorPane>
           </children>
        </HBox>
        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-padding: 3;">
           <children>
-              <TextArea fx:id="tArea" prefHeight="386.0" prefWidth="628.0" />
+              <TextArea fx:id="tArea" prefHeight="372.0" prefWidth="628.0" />
           </children>
        </HBox>
    </children>
