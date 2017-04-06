@@ -4,14 +4,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -22,8 +21,9 @@ import java.util.ResourceBundle;
 
 public class Client extends Application implements Initializable{
     public TextArea tArea;
-    public TextField tField;
+    public TextArea tField;
     public ImageView imageView;
+    public VBox boxWithHyperlinks;
 
     private String message;
     private ObjectInputStream input;
@@ -43,6 +43,8 @@ public class Client extends Application implements Initializable{
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        boxWithHyperlinks.getChildren().add(new Text("              Files"));
+        boxWithHyperlinks.getChildren().add(new Text("--------------------------------------------"));
         imageView.setImage(new Image("file:somePicture.png"));
         tArea.setEditable(false);
     }
@@ -53,9 +55,11 @@ public class Client extends Application implements Initializable{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        primaryStage.getIcons().add(new Image("file:chat-icon.png"));
         Parent root = FXMLLoader.load(getClass().getResource("sample/login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setMaxHeight(900);
         primaryStage.show();
     }
 
@@ -84,13 +88,9 @@ public class Client extends Application implements Initializable{
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(null);
 
-//        if (selectedFile != null) {
-//
-//            actionStatus.setText("File selected: " + selectedFile.getName());
-//        }
-//        else {
-//            actionStatus.setText("File selection cancelled.");
-//        }
+        if (selectedFile != null) {
+            boxWithHyperlinks.getChildren().add(new Hyperlink(selectedFile.getName()));
+        }
     }
 
     private void chat(){

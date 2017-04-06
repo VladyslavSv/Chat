@@ -8,31 +8,25 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="637.0" style="-fx-padding: 1; -fx-hgap: 1000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="635.0" minWidth="10.0" prefWidth="634.0" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints maxHeight="418.0" minHeight="10.0" prefHeight="386.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="193.0" minHeight="10.0" percentHeight="0.0" prefHeight="79.0" />
-    </rowConstraints>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-vgap: 5; -fx-padding: 1; -fx-hgap: 5;"
+          xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" prefWidth="466.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="134.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="305.0" minHeight="10.0" prefHeight="305.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-       <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-padding: 4;" GridPane.rowIndex="1">
-          <children>
-              <TextField fx:id="tField" onKeyPressed="#onKeyPressed" prefHeight="71.0" prefWidth="506.0" />
-            <AnchorPane prefHeight="71.0" prefWidth="124.0">
-               <children>
-                  <Button layoutX="7.0" layoutY="2.0" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="17.0" prefWidth="55.0" text="Send" />
-                  <ImageView fx:id="imageView" onMousePressed="#onPicturePressed" fitHeight="22.0" fitWidth="25.0" layoutX="76.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-
-               </children>
-            </AnchorPane>
-          </children>
-       </HBox>
-       <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-padding: 3;">
-          <children>
-              <TextArea fx:id="tArea" prefHeight="372.0" prefWidth="628.0" />
-          </children>
-       </HBox>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="29.0" prefWidth="54.0" text="Send"/>
+            <ImageView fx:id="imageView" onMousePressed="#onPicturePressed" fitHeight="22.0" fitWidth="25.0" layoutX="76.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <VBox prefHeight="278.0" prefWidth="131.0" style="-fx-border-color: #D3D3D3;" GridPane.columnIndex="1" fx:id="boxWithHyperlinks"/>
+      <TextArea fx:id="tArea" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="tField" onKeyPressed="#onKeyPressed" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
    </children>
 </GridPane>
