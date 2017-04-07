@@ -19,7 +19,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Client extends Application implements Initializable{
+public class Client implements Initializable{
     public TextArea tArea;
     public TextArea tField;
     public ImageView imageView;
@@ -47,20 +47,6 @@ public class Client extends Application implements Initializable{
         boxWithHyperlinks.getChildren().add(new Text("--------------------------------------------"));
         imageView.setImage(new Image("file:somePicture.png"));
         tArea.setEditable(false);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        primaryStage.getIcons().add(new Image("file:chat-icon.png"));
-        Parent root = FXMLLoader.load(getClass().getResource("sample/login.fxml"));
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setMaxHeight(900);
-        primaryStage.show();
     }
 
     public void onButtonClick() {
