@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class Client implements Initializable{
     public TextArea tArea;
-    public TextArea tField;
+    public TextField tField;
     public ImageView imageView;
     public VBox boxWithHyperlinks;
 
