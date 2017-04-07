@@ -8,11 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
-    private Map<String, ObjectOutputStream> clients;
+    private static Map<String, ObjectOutputStream> clients =
+            Collections.synchronizedMap
+            (new HashMap<String, ObjectOutputStream>());
 
     private Server() {
-        clients = Collections.synchronizedMap
-                (new HashMap<String, ObjectOutputStream>());
+    }
+
+    public static boolean isNameValid(String nameCheck){
+        if(clients.size()>0){
+            if(clients.containsKey(nameCheck)){
+                return false;
+            }
+            return true;
+        }
+        return true;
     }
 
     private void start() {
