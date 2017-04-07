@@ -29,12 +29,12 @@ public class Client implements Initializable{
     private ObjectOutputStream output;
     public Client() {
         try {
-            Socket socket = new Socket("195.138.81.175", 6969);
-            output = new ObjectOutputStream(socket.getOutputStream());
+
+            output = new ObjectOutputStream(Login.socket.getOutputStream());
             System.out.println(Login.userName);
             output.writeObject(Login.userName);
             output.flush();
-            input = new ObjectInputStream(socket.getInputStream());
+            input = new ObjectInputStream(Login.socket.getInputStream());
             chat();
         } catch (IOException e) {
             e.printStackTrace();
