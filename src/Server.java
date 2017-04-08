@@ -17,7 +17,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server=new Server();
+        new Server();
     }
 
     private void start() {
@@ -116,11 +116,11 @@ public class Server {
                 userName=message.getData();
                 //если такой пользователь уже авторизирован то уведомим об этом
                 if (clients.containsKey(userName)) {
-                    output.writeObject(new Boolean(false));
+                    output.writeObject(Boolean.FALSE);
                     return false;
                 }
                 else {
-                    output.writeObject(new Boolean(true));
+                    output.writeObject(Boolean.TRUE);
                     //оповестить всех о том что этот пользователь присоединилмя к чату
                     broadCast("@ "+userName + " Connected to chat");
                     System.out.println(userName + " : Connected");

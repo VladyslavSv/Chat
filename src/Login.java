@@ -25,16 +25,16 @@ public class Login implements Initializable{
     public void onButtonConnect() {
             try {
             //получаем сообщение из текстового поля
-            String textFromAread=tfName.getText();
+            String textFromArea=tfName.getText();
                 //проверяем не пустое ли поле
-                if (textFromAread.equals(""))
+                if (textFromArea.equals(""))
                     return;
-            userName = textFromAread;
+            userName = textFromArea;
             //отправляем на проверку серверу
             Message message=new Message(MessageType.SEND_USER_NAME,userName);
             HelperForClient.getConnection().send(message);
                 //если сервер одобрил переходим в chat room
-                if (HelperForClient.getConnection().getBoolean()==true) {
+                if (HelperForClient.getConnection().getBoolean()) {
 
                     Stage stage = (Stage) bConnect.getScene().getWindow();
                     Parent root = FXMLLoader.load(getClass().getResource("scenes/sample.fxml"));
@@ -47,10 +47,7 @@ public class Login implements Initializable{
                     alert();
                 }
             }
-            catch (IOException e){
-                e.printStackTrace();
-            }
-            catch(ClassNotFoundException e) {
+            catch (IOException | ClassNotFoundException e){
                 e.printStackTrace();
             }
 
@@ -64,11 +61,8 @@ public class Login implements Initializable{
         alert.setHeaderText(null);
         alert.setContentText("This name is already taken!!!");
         alert.showAndWait();
-    }
-    public void onKeyPressed(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == (KeyCode.ENTER) && !tfName.getText().equals("")){
-                onButtonConnect();
-        }
+
+        bConnect.requestFocus();
     }
 
     @Override
@@ -80,5 +74,19 @@ public class Login implements Initializable{
             System.out.println("Error with opening connection");
             e.printStackTrace();
         }
+    }
+
+    public void onKeyReleased(KeyEvent keyEvent) {
+        if(tfName.getText().length()>=4) bConnect.setDisable(false);
+        else bConnect.setDisable(true);
+
+        if(!bConnect.isDisabled() && keyEvent.getCode().equals(KeyCode.ENTER)){
+            onButtonConnect();
+        }
+    }
+
+    public void onConnectPressed(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER))
+            onButtonConnect();
     }
 }

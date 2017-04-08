@@ -30,7 +30,6 @@ public class Client implements Initializable{
 
             clientExecutor=new ClientExecutor();
             clientExecutor.start();
-
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

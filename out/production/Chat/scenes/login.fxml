@@ -14,11 +14,11 @@
                <Font name="Monospaced Regular" size="16.0" />
            </font>
        </Label>
-       <Button fx:id="bConnect" layoutX="131.0" layoutY="85.0" mnemonicParsing="false" onAction="#onButtonConnect" text="Connect">
+       <Button fx:id="bConnect" disable="true" layoutX="131.0" layoutY="85.0" mnemonicParsing="false" onAction="#onButtonConnect" onKeyPressed="#onConnectPressed" text="Connect">
            <font>
                <Font name="Monospaced Regular" size="16.0" />
            </font>
        </Button>
-       <TextField fx:id="tfName" layoutX="129.0" layoutY="40.0" onKeyPressed="#onKeyPressed" prefHeight="25.0" prefWidth="206.0" />
+       <TextField fx:id="tfName" layoutX="129.0" layoutY="40.0" onKeyReleased="#onKeyReleased" prefHeight="25.0" prefWidth="206.0" />
    </children>
 </AnchorPane>
