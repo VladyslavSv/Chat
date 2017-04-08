@@ -12,17 +12,19 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Client implements Initializable{
     public TextArea tArea;
     public TextField tField;
     public ImageView imageView;
-    public VBox boxWithHyperlinks;
+    public TextArea tOnline;
 
     private Message message;
     private Connection connection;
     private ClientExecutor clientExecutor;
+    private ArrayList<String> allOnline = new ArrayList<>();
 
     public Client() {
             HelperForClient.getStage().setOnCloseRequest(e->onCloseProgram());
@@ -33,10 +35,14 @@ public class Client implements Initializable{
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        boxWithHyperlinks.getChildren().add(new Text("              Files"));
-        boxWithHyperlinks.getChildren().add(new Text("--------------------------------------------"));
         imageView.setImage(new Image("file:somePicture.png"));
         tArea.setEditable(false);
+        tOnline.setEditable(false);
+        try {
+            HelperForClient.getConnection().send(new Message(MessageType.REQUEST_FOR_ONLINE,null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onButtonClick() {
@@ -62,7 +68,7 @@ public class Client implements Initializable{
         File selectedFile = fileChooser.showOpenDialog(null);
 
         if (selectedFile != null) {
-            boxWithHyperlinks.getChildren().add(new Hyperlink(selectedFile.getName()));
+            //boxWithHyperlinks.getChildren().add(new Hyperlink(selectedFile.getName()));
         }
     }
 
@@ -86,6 +92,17 @@ public class Client implements Initializable{
                         switch (message.getMessageType()) {
                             case BROAD_CAST:
                                 tArea.appendText(message.getData() + "\n");
+                                break;
+                            case ADD_TO_ONLINE:
+                                allOnline.add(message.getData());
+                                tOnline.appendText(message.getData());
+                                break;
+                            case REMOVE_FROM_ONLINE:
+                                allOnline.remove(message.getData());
+                                tOnline.clear();
+                                for(String s : allOnline){
+                                    tOnline.appendText(s);
+                                }
                                 break;
                         }
                     } catch (ClassNotFoundException | IOException e) {

@@ -39,12 +39,11 @@ public class Server {
         }
     }
 
-    private void broadCast(String msg) {
+    private void broadCast(Message message) {
 
         for (String s : clients.keySet()) {
             try {
                 ObjectOutputStream out = clients.get(s);
-                Message message=new Message(MessageType.BROAD_CAST,msg);
                 out.writeObject(message);
                 out.flush();
             } catch (IOException e) {
@@ -90,12 +89,18 @@ public class Server {
                         //если пользователь отослал сообщение в чат
                         //оповестим всех об этом
                         case SEND_TEXT_MESSAGE:
-                            broadCast(message.getData());
-                        break;
+                            broadCast(new Message(MessageType.BROAD_CAST,message.getData()));
+                            break;
+                        case REQUEST_FOR_ONLINE:
+                            for(String s : clients.keySet()) {
+                                output.writeObject(new Message(MessageType.ADD_TO_ONLINE, s+"\n"));
+                                output.flush();
+                            }
+                            break;
                         //если пользователь захотел выйти
                         case EXIT:
                             forTheCycle=false;
-                        break;
+                            break;
 
                     }
                 }
@@ -122,20 +127,25 @@ public class Server {
                 else {
                     output.writeObject(Boolean.TRUE);
                     //оповестить всех о том что этот пользователь присоединилмя к чату
-                    broadCast("@ "+userName + " Connected to chat");
+                    broadCast(new Message(MessageType.BROAD_CAST,"@ "+userName + " Connected to chat"));
                     System.out.println(userName + " : Connected");
                     //добавить пользователя в список всех пользователей
+                    broadCast(new Message(MessageType.ADD_TO_ONLINE,userName+"\n"));
                     clients.put(userName, output);
+
+                    output.flush();
                     return true;
                 }
         }
 
         private void close(){
             try {
-                broadCast(userName + " : Disconnected");
+                broadCast(new Message(MessageType.BROAD_CAST,userName + " : Disconnected"));
                 System.out.println(userName + " : Disconnected");
                 //удаляем пользователя из чата
                 clients.remove(userName);
+                broadCast(new Message(MessageType.REMOVE_FROM_ONLINE,userName+"\n"));
+                output.flush();
                 input.close();
                 output.close();
                 SocketUtil.close(socket);
