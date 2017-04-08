@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +22,7 @@ public class Login implements Initializable{
     public Button bConnect;
     public TextField tfName;
     public static String userName = "User";
+    public Label error;
 
     public void onButtonConnect() {
             try {
@@ -44,25 +46,15 @@ public class Login implements Initializable{
                     stage.show();
                 }
                 else {
-                    alert();
+                    tfName.setText("");
+                    bConnect.setDisable(true);
+                    error.setVisible(true);
                 }
             }
             catch (IOException | ClassNotFoundException e){
                 e.printStackTrace();
             }
 
-    }
-
-    private void alert(){
-        //уведомить что такой пользователь уже существует
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText("This name is already taken!!!");
-        alert.showAndWait();
-
-        bConnect.requestFocus();
     }
 
     @Override

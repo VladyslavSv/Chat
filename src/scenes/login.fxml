@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="136.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login">
+<AnchorPane prefHeight="156.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login">
    <children>
        <Label layoutX="35.0" layoutY="42.0" text="Name :">
            <font>
@@ -20,5 +20,10 @@
            </font>
        </Button>
        <TextField fx:id="tfName" layoutX="129.0" layoutY="40.0" onKeyReleased="#onKeyReleased" prefHeight="25.0" prefWidth="206.0" />
+      <Label fx:id="error" layoutX="35.0" layoutY="124.0" text="Pick another name" textFill="RED" visible="false">
+         <font>
+            <Font name="Consolas" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
