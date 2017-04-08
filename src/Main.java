@@ -15,12 +15,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("scenes/login.fxml"));
+
+        HelperForClient.setStage(primaryStage);
+
         primaryStage.getIcons().add(new Image("file:chat-icon.png"));
-        Parent root = FXMLLoader.load(getClass().getResource("sample/login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root));
-        primaryStage.setMaxHeight(900);
-        primaryStage.show();
         primaryStage.setResizable(false);
+        primaryStage.show();
     }
 }

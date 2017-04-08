@@ -10,11 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,21 +20,17 @@ public class Client implements Initializable{
     public ImageView imageView;
     public VBox boxWithHyperlinks;
 
-    private String message;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
-    public Client() {
-        try {
+    private Message message;
+    private Connection connection;
+    private ClientExecutor clientExecutor;
 
-            output = new ObjectOutputStream(Login.socket.getOutputStream());
-            System.out.println(Login.userName);
-            output.writeObject(Login.userName);
-            output.flush();
-            input = new ObjectInputStream(Login.socket.getInputStream());
-            chat();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Client() {
+            HelperForClient.getStage().setOnCloseRequest(e->onCloseProgram());
+            connection = HelperForClient.getConnection();
+
+            clientExecutor=new ClientExecutor();
+            clientExecutor.start();
+
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -50,9 +42,8 @@ public class Client implements Initializable{
 
     public void onButtonClick() {
         try {
-            String message = tField.getText();
-            output.writeObject(message);
-            output.flush();
+            message = new Message(MessageType.SEND_TEXT_MESSAGE,Login.userName+": "+tField.getText());
+            connection.send(message);///////////////////////////
             tField.setText("");
             tField.requestFocus();
         } catch (IOException e) {
@@ -68,8 +59,6 @@ public class Client implements Initializable{
     }
 
     public void onPicturePressed(){
-        System.out.println("Press");
-
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(null);
 
@@ -78,17 +67,33 @@ public class Client implements Initializable{
         }
     }
 
-    private void chat(){
-        new Thread(() -> {
-            while(true) {
-                try {
-                    message = (String) input.readObject();
-                    tArea.appendText(message + "\n");
-                } catch (ClassNotFoundException | IOException e) {
-                    e.printStackTrace();
+    public void onCloseProgram(){
+        try {
+            message = new Message(MessageType.EXIT, null);
+            connection.send(message);
+            clientExecutor.stop();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    private class ClientExecutor extends Thread {
+        public void run() {
+                while (true) {
+                    try {
+                        message = connection.receive();
+                        switch (message.getMessageType()) {
+                            case BROAD_CAST:
+                                tArea.appendText(message.getData() + "\n");
+                                break;
+                        }
+                    } catch (ClassNotFoundException | IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }).start();
+        }
     }
 
 }

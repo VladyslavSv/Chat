@@ -10,12 +10,15 @@ import java.util.Map;
 public class Server {
     private  Map<String, ObjectOutputStream> clients;
 
-
     private Server() {
         clients = Collections.synchronizedMap
                 (new HashMap<String, ObjectOutputStream>());
+        start();
     }
 
+    public static void main(String[] args) {
+        Server server=new Server();
+    }
 
     private void start() {
         ServerSocket serverSocket = null;
@@ -41,7 +44,8 @@ public class Server {
         for (String s : clients.keySet()) {
             try {
                 ObjectOutputStream out = clients.get(s);
-                out.writeObject(msg);
+                Message message=new Message(MessageType.BROAD_CAST,msg);
+                out.writeObject(message);
                 out.flush();
             } catch (IOException e) {
                 e.getStackTrace();
@@ -49,18 +53,15 @@ public class Server {
         }
     }
 
-    public static void main(String[] args) {
-        new Server().start();
-    }
-
-    class ServerReceiver extends Thread {
-        Socket socket;
-        ObjectInputStream input;
-        ObjectOutputStream output;
+    private class ServerReceiver extends Thread {
+        private Socket socket;
+        private ObjectInputStream input;
+        private ObjectOutputStream output;
+        private Message message;
+        private String userName;
 
         ServerReceiver(Socket socket) {
             this.socket = socket;
-
             try {
                 input = new ObjectInputStream(socket.getInputStream());
                 output = new ObjectOutputStream(socket.getOutputStream());
@@ -72,25 +73,75 @@ public class Server {
 
         @Override
         public void run() {
-            String name = "";
             try {
-                name = (String) input.readObject();
-                if(clients.containsKey(name)){
-                    name+=clients.size();
+                boolean forTheCycle=true;
+                //получаем , проверяем и добавляем нового пользователся
+                while (true){
+                    if(getNameAndAddToList()){
+                        break;
+                    }
                 }
-                broadCast(name + " : Connected");
-                clients.put(name, output);
+                //главный обработчик сообщений
+                while (forTheCycle) {
+                    //получаем сообщение
+                    message=(Message)input.readObject();
+                    //обрабатываем его
+                    switch (message.getMessageType()){
+                        //если пользователь отослал сообщение в чат
+                        //оповестим всех об этом
+                        case SEND_TEXT_MESSAGE:
+                            broadCast(message.getData());
+                        break;
+                        //если пользователь захотел выйти
+                        case EXIT:
+                            forTheCycle=false;
+                        break;
 
-                while (input != null) {
-                    broadCast(name + " : " + input.readObject());
+                    }
                 }
             } catch(IOException e) {
                 System.out.println("Read Failed");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            } finally {
-                broadCast(name + " : Disconnected");
-                clients.remove(name);
+            }
+            finally {
+                close();
+            }
+        }
+
+        private boolean getNameAndAddToList() throws IOException,ClassNotFoundException{
+            //получаем от клиента сообщение
+            message = (Message) input.readObject();
+                // получаем из сообщения имя
+                userName=message.getData();
+                //если такой пользователь уже авторизирован то уведомим об этом
+                if (clients.containsKey(userName)) {
+                    output.writeObject(new Boolean(false));
+                    return false;
+                }
+                else {
+                    output.writeObject(new Boolean(true));
+                    //оповестить всех о том что этот пользователь присоединилмя к чату
+                    broadCast("@ "+userName + " Connected to chat");
+                    System.out.println(userName + " : Connected");
+                    //добавить пользователя в список всех пользователей
+                    clients.put(userName, output);
+                    return true;
+                }
+        }
+
+        private void close(){
+            try {
+                broadCast(userName + " : Disconnected");
+                System.out.println(userName + " : Disconnected");
+                //удаляем пользователя из чата
+                clients.remove(userName);
+                input.close();
+                output.close();
+                SocketUtil.close(socket);
+            }
+            catch(IOException e){
+                e.printStackTrace();
             }
         }
     }
