@@ -1,3 +1,5 @@
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -19,10 +21,11 @@ import java.util.ResourceBundle;
  * Created by mmari on 05.04.2017.
  */
 public class Login implements Initializable{
-    public Button bConnect;
-    public TextField tfName;
+
+    public JFXButton bConnect;
     public static String userName = "User";
     public Label error;
+    public JFXTextField tfName;
 
     public void onButtonConnect() {
             try {
@@ -56,11 +59,11 @@ public class Login implements Initializable{
             }
 
     }
-//195.138.81.175
+
     @Override
     public void initialize(URL location, ResourceBundle resources){
         try {
-            HelperForClient.setConnection(new Connection(new Socket("127.0.0.1", 6969)));
+            HelperForClient.setConnection(new Connection(new Socket("195.138.81.175", 6969)));
         }
         catch (IOException e){
             System.out.println("Error with opening connection");

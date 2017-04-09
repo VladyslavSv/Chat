@@ -1,3 +1,4 @@
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class Client implements Initializable{
     public TextArea tArea;
-    public TextField tField;
+    public JFXTextField tField;
     public ImageView imageView;
     public TextArea tOnline;
 

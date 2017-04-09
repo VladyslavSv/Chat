@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -9,21 +10,19 @@
 
 <AnchorPane prefHeight="156.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login">
    <children>
-       <Label layoutX="35.0" layoutY="42.0" text="Name :">
+       <JFXButton fx:id="bConnect" buttonType="RAISED" disable="true" layoutX="134.0" layoutY="78.0" mnemonicParsing="false" onAction="#onButtonConnect" onKeyPressed="#onConnectPressed" ripplerFill="WHITE" style="-fx-background-color: #2196F3;" text="Connect">
            <font>
                <Font name="Monospaced Regular" size="16.0" />
            </font>
-       </Label>
-       <Button fx:id="bConnect" disable="true" layoutX="131.0" layoutY="85.0" mnemonicParsing="false" onAction="#onButtonConnect" onKeyPressed="#onConnectPressed" text="Connect">
-           <font>
-               <Font name="Monospaced Regular" size="16.0" />
-           </font>
-       </Button>
-       <TextField fx:id="tfName" layoutX="129.0" layoutY="40.0" onKeyReleased="#onKeyReleased" prefHeight="25.0" prefWidth="206.0" />
+       </JFXButton>
       <Label fx:id="error" layoutX="35.0" layoutY="124.0" text="Pick another name" textFill="RED" visible="false">
          <font>
             <Font name="Consolas" size="16.0" />
          </font>
       </Label>
+      <JFXTextField fx:id="tfName" layoutX="24.0" layoutY="39.0" onKeyReleased="#onKeyReleased" prefHeight="25.0" prefWidth="309.0" promptText="Name" unFocusColor="#6f6767">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
    </children>
 </AnchorPane>
