@@ -11,31 +11,27 @@ public class Connection implements Closeable
     private final ObjectInputStream in;
     private final ObjectOutputStream out;
 
-    public Connection(Socket socket) throws IOException {
+    Connection(Socket socket) throws IOException {
         this.socket = socket;
         out=new ObjectOutputStream(socket.getOutputStream());
         in=new ObjectInputStream(socket.getInputStream());
     }
 
-    public void send(Message message) throws IOException {
+    void send(Message message) throws IOException {
             out.writeObject(message);
             out.flush();
     }
 
-    public Message receive() throws IOException, ClassNotFoundException {
+    Message receive() throws IOException, ClassNotFoundException {
             return (Message) in.readObject();
 
     }
 
-    public SocketAddress getRemoteSocketAddress(){
-        return socket.getRemoteSocketAddress();
-    }
-
-    public Boolean getBoolean() throws IOException, ClassNotFoundException{
+    Boolean getBoolean() throws IOException, ClassNotFoundException{
         return (Boolean) in.readObject();
     }
 
-    public void sendBoolean(Boolean b) throws IOException{
+    void sendBoolean(Boolean b) throws IOException{
         out.writeObject(b);
         out.flush();
     }

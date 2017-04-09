@@ -8,19 +8,19 @@ public class HelperForClient {
     private static Connection connection;
     public static String userName;
 
-    public static Stage getStage() {
+    static Stage getStage() {
         return stage;
     }
 
-    public static void setStage(Stage stage) {
+    static void setStage(Stage stage) {
         HelperForClient.stage = stage;
     }
 
-    public static Connection getConnection() {
+    static Connection getConnection() {
         return connection;
     }
 
-    public static void setConnection(Connection connection) {
+    static void setConnection(Connection connection) {
         HelperForClient.connection = connection;
     }
 }

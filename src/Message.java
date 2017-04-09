@@ -7,12 +7,12 @@ public class Message implements Serializable{
     private MessageType messageType;
     private String data;
 
-    public Message(MessageType messageType, String data) {
+    Message(MessageType messageType, String data) {
         this.messageType = messageType;
         this.data = data;
     }
 
-    public MessageType getMessageType() {
+    MessageType getMessageType() {
         return messageType;
     }
 
@@ -20,7 +20,7 @@ public class Message implements Serializable{
         this.messageType = messageType;
     }
 
-    public String getData() {
+    String getData() {
         return data;
     }
 

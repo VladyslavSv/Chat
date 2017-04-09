@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class Login implements Initializable{
 
     public JFXButton bConnect;
-    public static String userName = "User";
+    static String userName = "User";
     public Label error;
     public JFXTextField tfName;
 
@@ -72,7 +72,7 @@ public class Login implements Initializable{
     }
 
     public void onKeyReleased(KeyEvent keyEvent) {
-        if(tfName.getText().length()>=4) bConnect.setDisable(false);
+        if(tfName.getText().length()>=4 && tfName.getText().length()<14) bConnect.setDisable(false);
         else bConnect.setDisable(true);
 
         if(!bConnect.isDisabled() && keyEvent.getCode().equals(KeyCode.ENTER)){

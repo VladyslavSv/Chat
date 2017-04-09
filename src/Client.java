@@ -1,17 +1,10 @@
-import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -19,7 +12,6 @@ import java.util.ResourceBundle;
 public class Client implements Initializable{
     public TextArea tArea;
     public TextField tField;
-    public ImageView imageView;
     public TextArea tOnline;
 
     private Message message;
@@ -36,7 +28,7 @@ public class Client implements Initializable{
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        imageView.setImage(new Image("file:somePicture.png"));
+        //imageView.setImage(new Image("file:somePicture.png"));
         tArea.setEditable(false);
         tOnline.setEditable(false);
         try {
@@ -48,10 +40,12 @@ public class Client implements Initializable{
 
     public void onButtonClick() {
         try {
-            message = new Message(MessageType.SEND_TEXT_MESSAGE,Login.userName+": "+tField.getText());
-            connection.send(message);///////////////////////////
-            tField.setText("");
-            tField.requestFocus();
+            if(tField.getText().length()>0) {
+                message = new Message(MessageType.SEND_TEXT_MESSAGE, Login.userName + ": " + tField.getText());
+                connection.send(message);///////////////////////////
+                tField.setText("");
+                tField.requestFocus();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,15 +55,6 @@ public class Client implements Initializable{
     public void onKeyPressed(KeyEvent keyEvent) {
         if(keyEvent.getCode() == (KeyCode.ENTER)){
             onButtonClick();
-        }
-    }
-
-    public void onPicturePressed(){
-        FileChooser fileChooser = new FileChooser();
-        File selectedFile = fileChooser.showOpenDialog(null);
-
-        if (selectedFile != null) {
-            //boxWithHyperlinks.getChildren().add(new Hyperlink(selectedFile.getName()));
         }
     }
 
