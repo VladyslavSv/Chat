@@ -1,8 +1,12 @@
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,7 +16,7 @@ import java.util.ResourceBundle;
 public class Client implements Initializable{
     public TextArea tArea;
     public TextField tField;
-    public TextArea tOnline;
+    public VBox vBox;
 
     private Message message;
     private Connection connection;
@@ -28,9 +32,7 @@ public class Client implements Initializable{
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //imageView.setImage(new Image("file:somePicture.png"));
         tArea.setEditable(false);
-        tOnline.setEditable(false);
         try {
             HelperForClient.getConnection().send(new Message(MessageType.REQUEST_FOR_ONLINE,null));
         } catch (IOException e) {
@@ -81,14 +83,26 @@ public class Client implements Initializable{
                                 break;
                             case ADD_TO_ONLINE:
                                 allOnline.add(message.getData());
-                                tOnline.appendText(message.getData());
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        vBox.getChildren().clear();
+                                        for(String s : allOnline) {
+                                            vBox.getChildren().add(new Label(s));
+                                        }
+                                    }
+                                });
                                 break;
                             case REMOVE_FROM_ONLINE:
                                 allOnline.remove(message.getData());
-                                tOnline.clear();
-                                for(String s : allOnline){
-                                    tOnline.appendText(s);
-                                }
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        vBox.getChildren().clear();
+                                        for(String s : allOnline)
+                                            vBox.getChildren().add(new Label(s));
+                                    }
+                                });
                                 break;
                         }
                     } catch (ClassNotFoundException | IOException e) {

@@ -59,7 +59,8 @@ public class Login implements Initializable{
             }
 
     }
-
+    //127.0.0.1
+    //195.138.81.175
     @Override
     public void initialize(URL location, ResourceBundle resources){
         try {
