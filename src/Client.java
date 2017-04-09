@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class Client implements Initializable{
     public TextArea tArea;
-    public JFXTextField tField;
+    public TextField tField;
     public ImageView imageView;
     public TextArea tOnline;
 
