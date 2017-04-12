@@ -1,6 +1,5 @@
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -24,11 +23,11 @@ public class Client implements Initializable{
     private ArrayList<String> allOnline = new ArrayList<>();
 
     public Client() {
-            HelperForClient.getStage().setOnCloseRequest(e->onCloseProgram());
-            connection = HelperForClient.getConnection();
+        HelperForClient.getStage().setOnCloseRequest(e->onCloseProgram());
+        connection = HelperForClient.getConnection();
 
-            clientExecutor=new ClientExecutor();
-            clientExecutor.start();
+        clientExecutor=new ClientExecutor();
+        clientExecutor.start();
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,43 +73,37 @@ public class Client implements Initializable{
 
     private class ClientExecutor extends Thread {
         public void run() {
-                while (true) {
-                    try {
-                        message = connection.receive();
-                        switch (message.getMessageType()) {
-                            case BROAD_CAST:
-                                tArea.appendText(message.getData() + "\n");
-                                break;
-                            case ADD_TO_ONLINE:
-                                allOnline.add(message.getData());
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        vBox.getChildren().clear();
-                                        for(String s : allOnline) {
-                                            vBox.getChildren().add(new Label(s));
-                                        }
-                                    }
-                                });
-                                break;
-                            case REMOVE_FROM_ONLINE:
+            while (true) {
+                try {
+                    message = connection.receive();
+                    switch (message.getMessageType()) {
+                        case BROAD_CAST:
+                            tArea.appendText(message.getData() + "\n");
+                            break;
+                        case ADD_TO_ONLINE:
+                            allOnline.add(message.getData());
+                            Platform.runLater(() -> {
+                                vBox.getChildren().clear();
+                                for(String s : allOnline) {
+                                    vBox.getChildren().add(new Label(s));
+                                }
+                            });
+                            break;
+                        case REMOVE_FROM_ONLINE:
+                            Platform.runLater(() -> {
+                                vBox.getChildren().remove(
+                                        vBox.getChildren().get(
+                                                allOnline.indexOf(
+                                                        message.getData())));
                                 allOnline.remove(message.getData());
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        vBox.getChildren().clear();
-                                        for(String s : allOnline)
-                                            vBox.getChildren().add(new Label(s));
-                                    }
-                                });
-                                break;
-                        }
-                    } catch (ClassNotFoundException | IOException e) {
-                        e.printStackTrace();
+                            });
+                            break;
                     }
+                } catch (ClassNotFoundException | IOException e) {
+                    e.printStackTrace();
                 }
+            }
         }
     }
 
 }
-
