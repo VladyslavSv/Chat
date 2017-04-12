@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
@@ -42,7 +43,8 @@ public class Login implements Initializable{
                 if (HelperForClient.getConnection().getBoolean()) {
 
                     Stage stage = (Stage) bConnect.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("scenes/sample.fxml"));
+                    URL url = new File("src\\main\\java\\scenes\\sample.fxml").toURL();
+                    Parent root = FXMLLoader.load(url);
 
                     stage.setScene(new Scene(root));
                     stage.setTitle("Chat Room");

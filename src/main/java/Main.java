@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.net.URL;
+
 /**
  * Created by ASUS on 07.04.2017.
  */
@@ -15,7 +18,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("scenes/login.fxml"));
+        URL url = new File("src\\main\\java\\scenes\\login.fxml").toURL();
+        Parent root = FXMLLoader.load(url);
 
         HelperForClient.setStage(primaryStage);
 
