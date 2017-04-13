@@ -1,3 +1,6 @@
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
+    private static ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("spring.xml");
     private  Map<String, ObjectOutputStream> clients;
 
     private Server() {
@@ -17,7 +21,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        new Server();
+        Server server=(Server)context.getBean("server");
     }
 
     private void start() {
