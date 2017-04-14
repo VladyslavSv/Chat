@@ -4,5 +4,5 @@
        xsi:schemaLocation="
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
-        <bean id="server" class="Server"></bean>
+        <bean id="server" class="Server" lazy-init="true"></bean>
 </beans>
