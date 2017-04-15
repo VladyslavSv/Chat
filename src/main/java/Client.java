@@ -1,3 +1,4 @@
+import com.jfoenix.controls.JFXTabPane;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,8 +19,8 @@ public class Client implements Initializable{
     public TextArea tArea;
     public TextField tField;
     public VBox vBox;
-    public TabPane tabPane;
     public Tab tabMain;
+    public JFXTabPane tabPane;
 
     private Message message;
     private Connection connection;
