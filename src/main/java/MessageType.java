@@ -4,6 +4,7 @@
 public enum MessageType {
     SEND_TEXT_MESSAGE,
     SEND_USER_NAME,
+    SEND_PERSONAL_MESSAGE,
     BROAD_CAST,
     ADD_TO_ONLINE,
     REMOVE_FROM_ONLINE,

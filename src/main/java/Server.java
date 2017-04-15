@@ -101,6 +101,18 @@ public class Server {
                                 output.flush();
                             }
                             break;
+                        case SEND_PERSONAL_MESSAGE:
+                            String receiver = message.getReceiver();//получатель
+                            String sender = message.getSender();//отправитель
+                            String mes = message.getData();//собщение
+                            for(String s : clients.keySet()){//ищем в клиентах получателя
+                                if(receiver.equals(s)){//если нашли
+                                    ObjectOutputStream sOut = clients.get(s);//получаем его ObjectOutputStream
+                                    sOut.writeObject(new Message(MessageType.SEND_PERSONAL_MESSAGE,mes+"\n",receiver,sender));//отправляем сообщение
+                                    sOut.flush();
+                                }
+                            }
+                            break;
                         //если пользователь захотел выйти
                         case EXIT:
                             forTheCycle=false;
