@@ -44,7 +44,9 @@ public class Client implements Initializable{
         MenuItem item = new MenuItem("Close");//В контекстом меню один пункт
         item.setOnAction(event -> {//при нажатии на close
             openTabs.remove(tabPane.getSelectionModel().getSelectedItem().getText());//из мапы удаляется запись
-            tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());//удаляется не та вкладка по которой кликнули, а активная(ПРОБЛЕМА)
+            if(tabPane.getSelectionModel().getSelectedItem() != tabMain) {//просто чтобы не закрыть main
+                tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());//удаляется не та вкладка по которой кликнули, а активная(ПРОБЛЕМА)
+            }
         });
         contextMenu.getItems().add(item);//В контекст добавляю пункт
         tArea.setEditable(false);
