@@ -18,7 +18,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        URL url = new File("src\\main\\java\\scenes\\login.fxml").toURL();
+        URL url = new File("scenes\\login.fxml").toURL();
         Parent root = FXMLLoader.load(url);
 
         HelperForClient.setStage(primaryStage);

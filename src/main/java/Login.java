@@ -40,7 +40,7 @@ public class Login implements Initializable{
                 if (HelperForClient.getConnection().getBoolean()) {
 
                     Stage stage = (Stage) bConnect.getScene().getWindow();
-                    URL url = new File("src\\main\\java\\scenes\\sample.fxml").toURL();
+                    URL url = new File("scenes\\sample.fxml").toURL();
                     Parent root = FXMLLoader.load(url);
 
                     stage.setScene(new Scene(root));
@@ -63,7 +63,7 @@ public class Login implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources){
         try {
-            HelperForClient.setConnection(new Connection(new Socket("127.0.0.1", 6969)));
+            HelperForClient.setConnection(new Connection(new Socket("195.138.81.175", 6969)));
         }
         catch (IOException e){
             System.out.println("Error with opening connection");

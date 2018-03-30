@@ -23,7 +23,6 @@ public class Server {
     public static void main(String[] args) {
         Server server=(Server)context.getBean("server");
     }
-
     private void start() {
         ServerSocket serverSocket = null;
         Socket socket;
